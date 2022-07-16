@@ -171,3 +171,23 @@ func TestReadItems(t *testing.T) {
 		t.Errorf("First Item should be %s but was %s", "Item 01", items[0].Text)
 	}
 }
+
+func TestReadItemsFromFile(t *testing.T) {
+	items, err := ReadItems("testdata/test.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(items) != 8 {
+		t.Errorf("Exptect read 8 items but read %d", len(items))
+	}
+
+	if items[0].Text != "Task 1" {
+		t.Errorf("First Item should be %s but was %s", "Task 1", items[0].Text)
+	}
+}
+
+func BenchmarkReadItems(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ReadItems("testdata/test.json")
+	}
+}

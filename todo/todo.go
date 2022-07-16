@@ -2,9 +2,17 @@ package todo
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 	"strconv"
 )
+
+var writeInFile = func(filename string, data []byte) error {
+	return os.WriteFile(filename, data, 0644)
+}
+
+var readFile = func(filename string) ([]byte, error) {
+	return os.ReadFile(filename)
+}
 
 type Item struct {
 	Text     string
@@ -72,7 +80,7 @@ func SaveItems(filename string, items []Item) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filename, b, 0644)
+	err = writeInFile(filename, b)
 	if err != nil {
 		return err
 	}
@@ -80,7 +88,7 @@ func SaveItems(filename string, items []Item) error {
 }
 
 func ReadItems(filename string) ([]Item, error) {
-	b, err := ioutil.ReadFile(filename)
+	b, err := readFile(filename)
 	if err != nil {
 		return []Item{}, err
 	}
@@ -93,4 +101,8 @@ func ReadItems(filename string) ([]Item, error) {
 		items[i].position = i + 1
 	}
 	return items, nil
+}
+
+func privateFunc() string {
+	return "This is a private func"
 }

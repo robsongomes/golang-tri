@@ -2,6 +2,7 @@ package todo
 
 import (
 	"encoding/json"
+	"reflect"
 	"sort"
 	"testing"
 )
@@ -173,7 +174,7 @@ func TestReadItems(t *testing.T) {
 }
 
 func TestReadItemsFromFile(t *testing.T) {
-	items, err := ReadItems("testdata/test.json")
+	items, err := ReadItems("testdata/read.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -186,8 +187,29 @@ func TestReadItemsFromFile(t *testing.T) {
 	}
 }
 
+func TestSaveItemsInFile(t *testing.T) {
+	items := []Item{
+		{Text: "Item 01", position: 1, Priority: 3, Done: false},
+		{Text: "Item 02", position: 2, Priority: 2, Done: true},
+	}
+	err := SaveItems("testdata/write.json", items)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	itemsRead, err := ReadItems("testdata/write.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(items, itemsRead) {
+		t.Errorf("Content write in file is different. Expected: \n%v \ngot \n%v", items, itemsRead)
+
+	}
+}
+
 func BenchmarkReadItems(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		ReadItems("testdata/test.json")
+		ReadItems("testdata/read.json")
 	}
 }

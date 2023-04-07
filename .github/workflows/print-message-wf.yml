@@ -1,0 +1,11 @@
+name: Print Message Workflow
+on: workflow_dispatch
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print hello world
+        run: echo "Hello World"
+      - name: Pring goodbye
+        run: echo "Goodbye"
+  

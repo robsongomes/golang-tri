@@ -1,0 +1,28 @@
+name: Deploy Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Setup Go environment
+        uses: actions/setup-go@v4.0.0
+      - name: Install Go modules
+        run: go mod tidy
+      - name: Run tests
+        run: go test -v github.com/robsongomes/tri/todo
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Setup Go environment
+        uses: actions/setup-go@v4.0.0
+      - name: Install Go modules
+        run: go mod tidy
+      - name: Build project
+        run: go build -o tri main.go
+      - name: Deploy project
+        run: ls tri

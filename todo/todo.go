@@ -22,7 +22,7 @@ type Item struct {
 }
 
 func (i *Item) Label() string {
-	return strconv.Itoa(i.position) + "-"
+	return strconv.Itoa(i.position) + "."
 }
 
 func (i *Item) SetPriority(pri int) {

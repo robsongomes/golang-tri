@@ -12,7 +12,7 @@ jobs:
         run: go mod tidy
       - name: Run tests
         run: go test -v github.com/robsongomes/tri/todo
-  deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -29,5 +29,13 @@ jobs:
         with:
           name: dist-file
           path: tri
-      - name: Deploy project
-        run: ls tri
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download binary
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-file
+      - name: Listing binary
+        run: ls

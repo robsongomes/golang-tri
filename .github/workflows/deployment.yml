@@ -6,6 +6,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: Setup Go environment
         uses: actions/setup-go@v4.0.0
       - name: Install Go modules
@@ -18,6 +26,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: Setup Go environment
         uses: actions/setup-go@v4.0.0
       - name: Install Go modules

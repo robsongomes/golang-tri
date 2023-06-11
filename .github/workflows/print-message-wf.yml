@@ -7,9 +7,7 @@ jobs:
       - name: Print hello world
         run: echo "Hello World"
       - name: Pring goodbye
-        run: echo "Goodbye"
-      - name: Get code
-        uses: actions/checkout@v3  
+        run: echo "Goodbye" 
       - name: Display commit event
         run: echo "${{ toJson(github) }}"
     
